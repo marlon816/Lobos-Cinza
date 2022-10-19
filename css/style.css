@@ -1,0 +1,344 @@
+img{
+    width: 100%; 
+    display: block;
+    border-radius: 5px;
+}
+
+body,p,h1,ul,li,blockquote{
+    padding: 0px;
+    margin: 0px;
+}
+
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+body{
+    font-family: 'Vollkorn',Georgia, serif;
+}
+
+
+/*Grid geral*/
+.estrutura{
+    display: grid;
+    grid-template-columns: minmax(160px,1fr) 3fr  300px;
+    grid-template-areas: "header header header"
+                            "sidenav content anuncios"
+                            "footer footer footer"
+    ;
+}
+@media(max-width:1200px){
+    .estrutura{
+        display: grid;
+        
+        grid-template-areas:    "header header header"
+                                "sidenav content content"
+                                "sidenav anuncios anuncios"
+                                "footer footer footer"
+        ;
+    }
+}
+@media(max-width:760px){
+    .estrutura{
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-areas:    "header"
+                                "sidenav"
+                                "content"
+                                "anuncios"
+                                "footer"
+        ;
+    }
+}
+
+/*HEADER menu*/
+.header{
+    grid-area: header;
+    background: linear-gradient(135deg, #8844ee,#b07dfb);
+    padding: 30px;
+    display:grid;
+    grid-template-columns: 1fr auto;/*auto ele joga o menu no canto direito*/
+}
+.logo{
+    max-width: 200px;
+}
+.header nav ul{
+    display: flex;/*flex da caída no item do ul*/
+    flex-wrap: wrap;
+
+}
+.header nav a{
+    display: block; /*display block importante transforma os item em elmentos de bock*/
+    padding: 10px;/*padding interno aumenta o tamanho para pode clicar com mouse*/
+    
+    color:18px;
+    font-size: 1.125em;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    transition: 0.1s;/*transição antes do hover sempre*/
+}
+.header nav a:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+
+.header li + li{
+    margin-left: 30px;
+
+    /*
+    + significa após ou seja adiciona sempre 30px após de um li 
+    
+    [li] +30+ [li]+30+ [li]
+    */
+}
+@media(max-width:760px){
+    .header{
+       grid-template-columns: auto; 
+    }
+    .logo{
+        margin-bottom: 20px;
+    }
+    .header nav a{
+        font-size:1em;
+    }
+    .header li + li{
+        margin-left: 10px;
+    }
+
+}
+
+
+
+
+
+
+
+.sidenav{
+    grid-area: sidenav;
+    background:#fafbfc;
+    padding:30px;
+}
+.sidenav li a{
+    display: block;
+    min-width: 60px;
+    max-width: 100px;
+    margin:0 auto 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius:5px;
+    box-shadow: 5px 5px 15px 0px rgba(44,44,44,0.15);
+    transition: 0.1s ease-out;
+    /*
+     margin:0 auto 30px auto;
+     margin: top,right,bottom,left; 
+
+     trasintion: ease-out; rápido/brusco no início,lento no final
+    */
+}
+
+.sidenav li a:hover{
+ 
+   background-color: #b07dfb;
+}
+@media(max-width:760px){
+    .sidenav ul{
+        display: flex;
+    } 
+    .sidenav ul li{
+        flex:1 0 60px;
+    }
+    .sidenav{
+        position: relative;/*ela se torna referencia do position absolute */
+        padding:0 30px;
+        /*padding: top/bottom e right/left*/
+    }
+    .sidenav li a{
+        margin: 30px 30px 30px 0px;
+    /*  margin: top,right,bottom,left;*/
+    }
+    .sidenav{
+        overflow-x: auto;/*overflow se o sidenav quebra o site coloca uma barra nele*/
+        -webkit-overflow-scrolling: touch;/*para dispositivo android */
+        -ms-overflow-style: -ms-autohiding-scrollbar;/*para esconder a barra nos navegadores microsoft edge*/
+    }
+    @keyframes seta{
+         from{
+            right: 30px;
+         }
+         to{
+            right: 20px;
+         }
+    } 
+    
+    
+    .sidenav::after{
+        content: "→";
+        position: absolute;
+        top:5px;
+        right: 30px;
+        color:rgba(0,0,0,0.3);
+        animation:seta 0.5s ease-in 0s infinite alternate;
+    }
+}
+
+
+
+
+
+.anuncios{
+    grid-area: anuncios;
+    background-color: #fafbfc;
+    display: grid;
+    align-content: start;
+    padding: 30px;/*diminuir a imagem */
+    grid-gap: 30px;/*ele da espaço de 30px entre os grid*/
+
+            /*     auto-fit = tente coloca coluna, minimo:150px e maximo:1fr         */
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+}
+
+
+.coluna_larga{
+    grid-column: 1/-1;
+}
+.imagem-1{
+    grid-row: span 2;
+    align-self: end;
+}
+.item-2{
+    align-self: end;/*alinha o eixo horizontal final*/
+}
+
+
+/*ESTILO DO CONTENT*/
+.content{
+    grid-area: content;
+    max-width: 960px;
+    margin: 0 auto;/*conteudo é alinhado ao centro*/
+    padding:30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap:30px;
+}
+@media(max-width:600px){
+  .content{
+    grid-template-columns: auto;
+  }
+}
+
+p{
+    font-size: 1.2em;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    color: rgba(0,0,0,0.7);
+ 
+    /*propriedade aumenta ou diminui o espaço entre os caracteres em um texto.*/
+
+}
+.informacoes p+p{
+    margin-top: 30px;
+}
+
+/*TITULO*/
+.titulo{
+    color:#b07dfb;
+}
+.titulo h1{
+    font-size: 3.75em;
+    line-height:1;
+    font-weight: 700;
+}
+.titulo span{
+    font-size: 0.875em;
+    font-style:italic;
+}
+/*  CARACTERISTICAS */
+.caracteristicas{
+    display: flex;
+    align-items: flex-start;/*vai alinha os itens no inicio da linha*/
+}
+.caracteristicas div{
+    width: 80px;
+    text-align: center;
+    background: linear-gradient(135deg, #8844ee,#b07dfb);
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px 0px rgba(44,44,44,0.15);
+    position: relative;
+    top:2px;
+
+}
+.caracteristicas div:first-child{
+    margin-right: 30px;
+}
+.caracteristicas span{
+    display: block;
+}
+.numero{
+    color:#b07dfb;
+    font-size: 3em;
+    line-height: 1;
+    margin:10px auto;
+}
+.rotulo{
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    color:#b07dfb;
+    padding: 5px 0;
+    position: relative;
+    top:2px;
+  /*padding: top e bottom / direita e esquerda*/
+}
+
+
+
+.destaque{
+    font-size: 0.875em;
+    color:#b07dfb;
+    max-width: 16em;
+}
+.citacao, .atributos{
+    align-self: start;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px 0px rgba(44,44,44,0.15);
+    background: linear-gradient(135deg, #8844ee,#b07dfb);
+    
+    
+}
+.citacao p{
+    font-size: 1.5em;
+    font-style: italic;
+    text-align: center;
+    max-width: 500px;
+    margin:0 auto;
+    color:white
+}
+
+.atributos li{
+    color:white;
+    font-family:Courier, monospace;
+    font-size: 1.2em;
+    padding: 15px;
+}
+.atributos li + li{
+  border-top: 2px solid #b07dfb;
+}
+
+
+
+
+
+
+
+
+.footer{
+    grid-area: footer;
+    background: linear-gradient(135deg, #8844ee,#b07dfb);  
+}
+
+.footer p{
+    color:white;
+    text-align: center;
+    padding: 30px;
+}
